@@ -36,7 +36,7 @@ class IntroScreen extends StatelessWidget {
         child: Stack(
           children: [
             Image(
-              image: const AssetImage('assets/intro/imagen3.jpg'),
+              image: const AssetImage('assets/intro/imagen3.jpg'), 
               fit: BoxFit.cover,
               height: size.height, 
             ),
