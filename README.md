@@ -1,4 +1,4 @@
-# page_view_1
+# Rick & Morty
 
 A new Flutter project.
 
