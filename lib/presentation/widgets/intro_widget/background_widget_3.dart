@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:page_view_1/presentation/widgets/intro_widget/liquid_text.dart';
 
 
-class BackgroundWidget3 extends StatelessWidget {
-  const BackgroundWidget3({super.key, 
+class BackgroundWidget2 extends StatelessWidget {
+  const BackgroundWidget2({super.key, 
     required this.size, 
     required this.assetImage, 
     required this.paddingTop, 
@@ -44,6 +44,7 @@ class BackgroundWidget3 extends StatelessWidget {
                   )
                 ),
               ),
+              
               LiquidText(paddingTop: paddingTop,title: title,subtitle: subtitle,textbody: textbody,)
             ],
           ),

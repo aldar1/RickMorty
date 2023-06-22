@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_view_1/presentation/screens/signup_screen.dart';
-
 
 class ButtonsIntro extends StatelessWidget {
   const ButtonsIntro({super.key,  
@@ -33,10 +31,7 @@ class ButtonsIntro extends StatelessWidget {
       child: MaterialButton(
         height: 50,
         onPressed: (){
-          final route = MaterialPageRoute(
-            builder: (context) => const SignupScreen()
-          );
-          Navigator.push(context, route);
+          Navigator.pushReplacementNamed(context, '/signup');
         },
         child: Text(titleButton,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),
       ),

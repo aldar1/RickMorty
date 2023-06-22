@@ -1,51 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:page_view_1/presentation/widgets/commons/button_style_1.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:page_view_1/presentation/providers/theme_provider.dart';
 import 'package:page_view_1/presentation/widgets/login/circle_avatar_icon.dart';
-
+import 'package:page_view_1/presentation/widgets/login/image_login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class RegistroScreen extends StatelessWidget {
   const RegistroScreen({super.key});
 
+  
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Stack(
+      body: ListView(
+        padding: EdgeInsets.zero,
         children: [
-          ContainerDecorationCircle(size: size),
-          SizedBox(height: size.height * 0.4,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: ListView(
-              children: [
-                SizedBox(height: size.height * 0.30),
-                const _InputDecoration1(hintText: 'Usuario',labelText: 'Usuario',prefixIcon: Icons.account_circle,suffixIcon: Icon(null,color: Colors.grey,)),
-                SizedBox(height: size.height * 0.03,),
-                const _InputDecoration1(hintText: 'Correo Electronico',prefixIcon: Icons.email,labelText: 'Correo Electronico',suffixIcon: Icon(null)),
-                SizedBox(height: size.height * 0.03,),
-                const _InputDecoration1(hintText: 'Contraseña',labelText: 'Contraseña',prefixIcon: Icons.lock_clock,suffixIcon: Icon(Icons.lock,color: Colors.grey,)),
-                SizedBox(height: size.height * 0.03,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.check_box_outline_blank),
-                      SizedBox(width: size.width * 0.04,),
-                      const Text('Acepto la política y los términos',style: TextStyle(fontSize: 13),),
-                    ],
-                  ),
+          SizedBox(height: size.height* 0.15,),
+          ImageLogin(size: size),
+          const Column(
+            children: [
+              Text(
+                'Registro',
+                style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2
                 ),
-                SizedBox(height: size.height * 0.03,),
-                ButtonStyle1(size: size,marginContainer: size.width * 0.15,text: 'Registrarse',iconData: Icons.accessibility),
-                SizedBox(height: size.height * 0.03,),
-                const RowCircleAvatar(),
-                SizedBox(height: size.height * 0.01,),
-                Row(
+              ),
+              Text(
+                'Una Aventura por vivir',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: size.height * 0.04),
+          _ButtonStyle1(size: size,marginContainer: size.width * 0.09,text: 'Continuar con Google',iconData: Icons.account_circle,),
+          SizedBox(height: size.height * 0.03),
+          _ButtonOutline1(size: size),
+          SizedBox(height: size.height * 0.03),
+          const RowCircleAvatar(),
+          SizedBox(height: size.height * 0.03),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'No tiene Cuenta ? ',
+                'Todavia No tienes Cuenta ? ',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400
@@ -53,10 +59,7 @@ class RegistroScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: (){
-                  final route = MaterialPageRoute(
-                    builder: (context) => const RegistroScreen()
-                  );
-                  Navigator.push(context, route);
+                  Navigator.pushNamed(context, '/signup');
                 },
                 child: const Text(
                   ' Sign Up',
@@ -72,47 +75,14 @@ class RegistroScreen extends StatelessWidget {
               ),
             ],
           ),
-              ],
-            ),
-          ),
         ],
       ),
     );
   }
 }
 
-class _InputDecoration1 extends StatelessWidget {
-  const _InputDecoration1({
-    required this.hintText, 
-    required this.labelText, 
-    required this.suffixIcon, 
-    required this.prefixIcon,
-  });
-  final String hintText;
-  final String labelText;
-  final Icon suffixIcon;
-  final IconData prefixIcon;
-  
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20)
-        ),
-        hintText: hintText,
-        prefixIcon: Icon(prefixIcon,color: Colors.green,),
-        suffixIcon: suffixIcon,
-        labelText: labelText
-      ),
-    );
-  }
-}
-
-class ContainerDecorationCircle extends StatelessWidget {
-  const ContainerDecorationCircle({
-    super.key,
+class _ButtonOutline1 extends StatelessWidget {
+  const _ButtonOutline1({
     required this.size,
   });
 
@@ -120,39 +90,33 @@ class ContainerDecorationCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.translate(
-      offset: Offset(-50, size.height * -0.1),
-      child: Container(
-        width: size.height * 0.43,
-        height: size.height * 0.43,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(500),
-          gradient: LinearGradient(
-            colors: [
-              Colors.green[300]!,
-              Colors.green[600]!
-            ]
+    final providerTheme = Provider.of<ThemeProvider>(context);
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: size.width * 0.14),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(
+            width: 1,
+            color: providerTheme.isdarktheme ?  Colors.white : Colors.black
           )
         ),
+        onPressed: (){
+          Navigator.pushNamed(
+              context, '/signin',
+              // (route) => false,
+          );
+          // Navigator.pushNamed(context, '/signin');
+        },
         child: Padding(
-          padding: EdgeInsets.only(left:50+30,top: size.height * 0.2),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(vertical: 12), 
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                'Hola',
+                'Correo electronico o telefono',
                 style: TextStyle(
-                  fontSize: 26,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500
-                ),
-              ),
-              Text(
-                'Registrarse!',
-                style: TextStyle(
-                  fontSize: 34,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold
+                  fontSize: 13,
+                  color: providerTheme.isdarktheme ?  Colors.white : Colors.black
                 ),
               ),
             ],
@@ -162,3 +126,84 @@ class ContainerDecorationCircle extends StatelessWidget {
     );
   }
 }
+
+
+class _ButtonStyle1 extends StatelessWidget {
+  const _ButtonStyle1({
+    required this.size, 
+    required this.marginContainer, 
+    required this.text, 
+    required this.iconData, 
+  });
+
+  final Size size;
+  final double marginContainer;
+  final String text;
+  final IconData iconData;
+
+  @override
+  Widget build(BuildContext context) {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    // User? user1;
+
+    loginWithGoogle() async {
+      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      try {
+        final UserCredential userCredential = await firebaseAuth.signInWithCredential(authCredential);
+        // print(userCredential);
+        return userCredential;
+      } catch (e) {
+        // print(e);
+        return null;
+      }
+    }
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: marginContainer),
+      child: MaterialButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        onPressed: () async{
+          UserCredential? userCredentialFinal = await loginWithGoogle();
+          if(userCredentialFinal != null){
+            // ignore: use_build_context_synchronously
+            Navigator.pushNamedAndRemoveUntil(
+              context, '/home',
+              (route) => false,
+          );
+          }
+        }, 
+        color: Colors.green,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 20), 
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // Icon(iconData,color: Colors.white,size: 30,),
+              Image.asset(
+                'assets/logo/logoGoogle1.png',
+                width: 30,
+                height: 30,
+              ),
+              Text(text,style: const TextStyle(fontSize: 17,color: Colors.white),),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:page_view_1/presentation/screens/signup_screen.dart';
 import 'package:page_view_1/presentation/widgets/intro_widget/background_widget_2.dart';
-import 'package:page_view_1/presentation/widgets/intro_widget/buttons_intro.dart';
+import 'package:page_view_1/presentation/widgets/intro_widget/background_widget_3.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});
@@ -30,8 +29,22 @@ class IntroScreen extends StatelessWidget {
           ],
         ),
       ),
-      BackgroundWidget2(size: size,assetImage: 'assets/intro/imagen1.jpg',paddingTop: size.height * 0.11,title: 'Descrubre esta aventura',subtitle: 'Se parte de ella y explora',textbody: 'Conoce a todos los personajes, revisa en que capitulos aparecieron y podras adentrarte a esta gran aventura'),
-      BackgroundWidget2(size: size,assetImage: 'assets/intro/imagen4.jpg',paddingTop: size.height * 0.65,title: 'Descrubra personajes',subtitle: 'Morty Malvado',textbody: 'Evil Morty es un dictador frío, manipulador, sádico, astuto, despiadado, muy inteligente y tiránico, que casi refleja a la mayoría de los Ricks e incluso los supera en ocasiones.'),
+      BackgroundWidget2(
+        size: size,
+        assetImage: 'assets/intro/imagen1.jpg',
+        paddingTop: size.height * 0.11,
+        title: 'Descrubre esta avenasdtura',
+        subtitle: 'Se parte de ella y explora',
+        textbody: 'Conoce a todos los personajes, revisa en que capitulos aparecieron y podras adentrarte a esta gran aventura'
+      ),
+      BackgroundWidget3(
+        size: size,
+        assetImage: 'assets/intro/imagen4.jpg',
+        paddingTop: size.height * 0.65,
+        title: 'Descrubra personajes',
+        subtitle: 'Morty Malvado',
+        textbody: 'Evil Morty es un dictador frío, manipulador, sádico, astuto, despiadado, muy inteligente y tiránico, que casi refleja a la mayoría de los Ricks e incluso los supera en ocasiones.'
+      ),
       SizedBox(
         child: Stack(
           children: [
@@ -59,10 +72,7 @@ class IntroScreen extends StatelessWidget {
                             backgroundColor: Colors.white.withOpacity(0.85)
                           ),
                           onPressed: (){
-                            final route = MaterialPageRoute(
-                              builder: (context) => const SignupScreen()
-                            );
-                            Navigator.push(context, route);
+                            Navigator.pushReplacementNamed(context, '/registro');
                           },
                           child: const Text('   Continuar   '),
                         ),
@@ -81,9 +91,11 @@ class IntroScreen extends StatelessWidget {
     return LiquidSwipe(
       slideIconWidget: const Icon(Icons.arrow_forward_ios_sharp,color: Colors.white,),
       positionSlideIcon: 0.4,
-      fullTransitionValue: 600,
+      fullTransitionValue: 1000,
       enableLoop: false,
-      pages: pageLiquidSwipe
+      pages: pageLiquidSwipe,
+      preferDragFromRevealedArea: true,
+      ignoreUserGestureWhileAnimating: true,
     );
   }
 }

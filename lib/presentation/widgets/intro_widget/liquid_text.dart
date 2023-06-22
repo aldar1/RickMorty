@@ -27,33 +27,33 @@ class LiquidText extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AnimatedTextKit(
-                  pause: const Duration(milliseconds: 800),
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TyperAnimatedText(
                       title,
-                      textStyle: AppTextStyle.titleIntro1
+                      textStyle: AppTextStyle.titleIntro1,
+                      speed: const Duration(milliseconds: 15)
                     ),
                   ]
                 ),
                 AnimatedTextKit(
-                  pause: const Duration(milliseconds: 800),
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TyperAnimatedText(
                       subtitle,
-                      textStyle: AppTextStyle.titleIntro2
+                      textStyle: AppTextStyle.titleIntro2,
+                      speed: const Duration(milliseconds: 15)
                     ),
                   ]
                 ),
                 const SizedBox(height: 15,),
                 AnimatedTextKit(
-                  pause: const Duration(milliseconds: 800),
                   totalRepeatCount: 1,
                   animatedTexts: [
                     TyperAnimatedText(
                       textbody,
-                      textStyle: AppTextStyle.titleIntro3
+                      textStyle: AppTextStyle.titleIntro3,
+                      speed: const Duration(milliseconds: 15)
                     ),
                   ]
                 ),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_view_1/presentation/screens/home_screen.dart';
-
 
 class ButtonStyle1 extends StatelessWidget {
   const ButtonStyle1({
@@ -24,14 +22,16 @@ class ButtonStyle1 extends StatelessWidget {
       child: MaterialButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         onPressed: (){
-          final route = MaterialPageRoute(builder: (context) => const HomeScreen());
-          Navigator.push(context, route);
+          Navigator.pushNamedAndRemoveUntil(
+            context, '/home',
+            (route) => false,
+          );
         }, 
         color: Colors.green,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10), 
+          padding: const EdgeInsets.symmetric(vertical: 15), 
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Icon(iconData,color: Colors.white,size: 30,),
               Text(text,style: const TextStyle(fontSize: 17,color: Colors.white),),

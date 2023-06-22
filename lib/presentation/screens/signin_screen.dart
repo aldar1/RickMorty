@@ -4,22 +4,23 @@ import 'package:page_view_1/presentation/widgets/commons/check_box_widget.dart';
 import 'package:page_view_1/presentation/widgets/login/circle_avatar_icon.dart';
 
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SigninScreenState extends State<SigninScreen> {
+
   TextEditingController userTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
-    
+    const textStyle = TextStyle(fontSize: 13);
     return Scaffold(
       body: Stack(
         children: [
@@ -29,16 +30,8 @@ class _SignupScreenState extends State<SignupScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: ListView(
               children: [
-                SizedBox(height: size.height * 0.30),
-                _InputDecoration1(
-                  textController: userTextController,
-                  hintText: 'Usuario',
-                  labelText: 'Usuario',
-                  obscureText: false,
-                  prefixIcon: Icons.account_circle,
-                  suffixIcon: const Icon(null,color: Colors.grey,)
-                ),
-                SizedBox(height: size.height * 0.03,),
+                SizedBox(height: size.height * 0.35),
+                // const _InputDecoration1(hintText: 'Correo Electronico',labelText: 'Correo Electronico',suffixIcon: Icon(null),prefixIcon: Icons.email),
                 _InputDecoration1(
                   textController: emailTextController,
                   hintText: 'Correo Electronico',
@@ -47,7 +40,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   prefixIcon: Icons.email,
                   suffixIcon: const Icon(null)
                 ),
-                SizedBox(height: size.height * 0.03,),
+                SizedBox(height: size.height * 0.04,),
+                // const _InputDecoration1(hintText: 'Contraseña',labelText: 'Contraseña',suffixIcon: Icon(Icons.lock,color: Colors.grey,),prefixIcon: Icons.lock),
                 _InputDecoration1(
                   textController: passwordTextController,
                   hintText: 'Contraseña',
@@ -57,34 +51,38 @@ class _SignupScreenState extends State<SignupScreen> {
                   suffixIcon: const Icon(Icons.lock,color: Colors.grey,)
                 ),
                 SizedBox(height: size.height * 0.02,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const CheckBoxWidget(),
-                      SizedBox(width: size.width * 0.01,),
-                      const Text('Acepto la política y los términos',style: TextStyle(fontSize: 13),),
+                      Row(
+                        children: [
+                          CheckBoxWidget(),
+                          Text('Recuerdame',style: textStyle,),
+                        ],
+                      ),
+                      Text('Olvido su Contraseña?',style: textStyle),
                     ],
                   ),
                 ),
-                SizedBox(height: size.height * 0.02,),
+                SizedBox(height: size.height * 0.03,),
                 ButtonStyle1(
                   textEmail: emailTextController,
                   textPassword: passwordTextController,
                   size: size,
                   marginContainer: size.width * 0.15,
-                  text: 'Registrarse',
-                  iconData: Icons.assignment_rounded
+                  text: 'Iniciar Sesion',
+                  iconData: Icons.login
                 ),
                 SizedBox(height: size.height * 0.03,),
                 const RowCircleAvatar(),
-                SizedBox(height: size.height * 0.01,),
+                SizedBox(height: size.height * 0.02,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Ya Tienes Cuenta ? ',
+                      'No tiene Cuenta ? ',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w400
@@ -92,10 +90,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushReplacementNamed(context, '/signin');
+                        Navigator.pushReplacementNamed(context, '/signup');
                       },
                       child: const Text(
-                        ' Sign In',
+                        ' Sign Up',
                         style: TextStyle(
                           height: 1.5,
                           fontSize: 15,
@@ -104,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: TextDecoration.underline,
                           decorationColor: Colors.green
                         ),
-                      ),    
+                      ),
                     ),
                   ],
                 ),
@@ -116,7 +114,6 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
-
 class ButtonStyle1 extends StatelessWidget {
   const ButtonStyle1({
     super.key,
@@ -142,11 +139,11 @@ class ButtonStyle1 extends StatelessWidget {
       child: MaterialButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         onPressed: (){
-          FirebaseAuth.instance.createUserWithEmailAndPassword(
+          FirebaseAuth.instance.signInWithEmailAndPassword(
             email: textEmail.text, 
             password: textPassword.text
           ).then((value) {
-            // print('Created New Account');
+            // print('Se creo un Nuevo Usuario');
             Navigator.pushNamedAndRemoveUntil(
               context, '/home',
               (route) => false,
@@ -171,21 +168,22 @@ class ButtonStyle1 extends StatelessWidget {
   }
 }
 
+
+
 class _InputDecoration1 extends StatelessWidget {
   const _InputDecoration1({
     required this.hintText, 
     required this.labelText, 
     required this.suffixIcon, 
-    required this.prefixIcon, 
-    this.textController,
+    required this.prefixIcon,
+    required this.textController,
     required this.obscureText
-
   });
   final String hintText;
   final String labelText;
   final Icon suffixIcon;
   final IconData prefixIcon;
-  final TextEditingController? textController;
+  final TextEditingController textController;
   final bool obscureText;
   
 
@@ -202,7 +200,6 @@ class _InputDecoration1 extends StatelessWidget {
         ),
         hintText: hintText,
         prefixIcon: Icon(prefixIcon,color: Colors.green,),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
         suffixIcon: suffixIcon,
         labelText: labelText
       ),
@@ -241,7 +238,7 @@ class ContainerDecorationCircle extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hola',
+                'Bievenido',
                 style: TextStyle(
                   fontSize: 26,
                   color: Colors.white,
@@ -249,7 +246,7 @@ class ContainerDecorationCircle extends StatelessWidget {
                 ),
               ),
               Text(
-                'Registrarse!',
+                'Iniciar Sesion!',
                 style: TextStyle(
                   fontSize: 34,
                   color: Colors.white,
