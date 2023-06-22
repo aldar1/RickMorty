@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+gitHub: https://github.com/aldar1/RickMorty
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
